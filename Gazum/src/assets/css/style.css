@@ -1,0 +1,21 @@
+body {
+    background-color: #f4f7f6; /* Fond gris très clair pour le contraste */
+}
+
+/* Ombre légère sur les cartes et éléments clés */
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+/* Style des badges de rôles pour une meilleure visibilité */
+.badge {
+    padding: 0.5em 0.8em;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+/* Assure le bon alignement des éléments dans le modal footer */
+.modal-footer {
+    border-top: none;
+    padding-top: 0;
+}

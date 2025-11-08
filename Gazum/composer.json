@@ -1,0 +1,17 @@
+{
+    "name": "gazum/app",
+    "description": "Pour la gestion des utilisateur dans la societe gazum",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Gazum\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AugustinCpu",
+            "email": "augustin.mercurise@gmail.com"
+        }
+    ],
+    "require": {}
+}
