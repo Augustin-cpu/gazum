@@ -36,15 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
     addUserForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const fullName = document.getElementById("fullName").value;
-      const email = document.getElementById("email").value;
-      const role = document.getElementById("role").value;
+      // const fullName = document.getElementById("fullName").value;
+      // const email = document.getElementById("email").value;
+      // const role = document.getElementById("role").value;
 
       // Simulation d'une alerte de succès
-      alert(`Utilisateur ajouté avec succès !
-Nom: ${fullName}
-Email: ${email}
-Rôle: ${role}`);
+//       alert(`Utilisateur ajouté avec succès !
+// Nom: ${fullName}
+// Email: ${email}
+// Rôle: ${role}`);
 
       // Fermer le modal
       const modalElement = document.getElementById("addUserModal");
@@ -57,6 +57,7 @@ Rôle: ${role}`);
       addUserForm.reset();
 
       // NOTE: En production, vous enverriez ces données à un serveur (PHP/NodeJS/etc.) ici.
+      
     });
   }
 });

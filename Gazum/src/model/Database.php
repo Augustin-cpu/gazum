@@ -2,7 +2,6 @@
 
 namespace Gazum\App\Model;
 
-use Gazum\App\Entite\Users;
 use PDO;
 use PDOException;
 
@@ -21,27 +20,35 @@ class Database{
 
     }
 
-    public function addUsers(){}
+    public function addUsers(array $params){
+        $query = $this->bdd->prepare('INSERT INTO users (nom,prenom,email,password,fonction_id) VALUES(:nom,:prenom,:email,:password,:fonction_id)');
+
+        $query->execute(array(
+            'nom'         => $params['nom'],
+            'prenom'      => $params['prenom'],
+            'email'       => $params['email'],
+            'password'    => $params['password'],
+            'fonction_id' => $params['fonction_id']
+        ));
+    }
     public function getAll(){
         $query = $this->bdd->query(
-            "SELECT users.users_id,users.nom,users.prenom, users.email,fonction.nom_fonction
+            "SELECT users.users_id,users.nom,users.prenom,users.email,fonction.nom_fonction
                 FROM users
             INNER JOIN fonction 
-                ON users.users_id = fonction.fonction_id");
-        $users = [];
-        while($donnes = $query->fetch()){
-            $datas = [
-                'id' => $donnes['users_id'],
-                'nom' => $donnes['nom'],
-                'prenom' => $donnes['prenom'],
-                'email' => $donnes['email'],
-                'fonction' => $donnes['nom_fonction']
-            ];
-            $users [] = $datas;
-        }
+                ON users.fonction_id = fonction.fonction_id");
+        while($donnes = $query->fetch())
+            $users [] = $donnes;
+        
         return $users;
     }
+    public function getFonction(){
+        $query = $this->bdd->query('SELECT fonction_id, nom_fonction FROM fonction');
+        while($donnees = $query->fetch())
+            $fonction [] = $donnees;
 
+        return $fonction;
+    }
     public function Update(){}
     public function Delete(){}
 }

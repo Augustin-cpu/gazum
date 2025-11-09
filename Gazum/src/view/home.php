@@ -22,7 +22,8 @@
                     <thead class="bg-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Nom Complet</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prenom</th>
                             <th scope="col">Email</th>
                             <th scope="col">Rôle</th>
                             <th scope="col">Statut</th>
@@ -33,18 +34,17 @@
                             <?php foreach($users as $user):?>
                         <tr>
 
-                            <th scope="row"><?= $user['id']?></th>
+                            <th scope="row"><?= $user['users_id']?></th>
                             <td><?= $user['nom'] ?></td>
                             <td><?= $user['prenom'] ?></td>
                             <td><?= $user['email'] ?></td>
-                            <td><span class="badge bg-danger"><?= $user['fonction'] ?></span></td>
+                            <td><a href="?url=home/nom=<?= $user['nom_fonction'] ?>"><span class="badge bg-danger"><?= $user['nom_fonction'] ?></span></a></td>
                             <td><span class="badge bg-success">Actif</span></td>
                             <td>
                                 <button class="btn btn-sm btn-info text-white me-1" title="Modifier"><i class="fas fa-edit"></i></button>
                                 <button class="btn btn-sm btn-warning me-1" title="Bloquer"><i class="fas fa-ban"></i></button>
                             </td>
                         </tr>
-
                             <?php endforeach;?>
                     </tbody>
                 </table>
@@ -61,26 +61,32 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm">
+                <form  method="post">
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Nom Complet</label>
-                        <input type="text" class="form-control" id="fullName" required>
+                        <label for="fullName" class="form-label">Nom</label>
+                        <input type="text" name="nom" class="form-control" id="fullName" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Prenom</label>
+                        <input type="text" name="prenom" class="form-control" id="fullName" required>
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="email" class="form-label">Adresse Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" name="email" class="form-control" id="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">Rôle</label>
-                        <select class="form-select" id="role" required>
-                            <option value="Client">Client</option>
-                            <option value="Administrateur">Administrateur</option>
-                            <option value="Visiteur">Visiteur</option>
+                        <label for="role" class="form-label">Fonction</label>
+                        <select class="form-select" name="fonction_id" id="role" required>
+                            <option value="Choisissez">Attribue une fonction</option>
+                       <?php foreach($fonction as $fonc):?>
+                            <option value="<?=$fonc['fonction_id']?>"><?= $fonc['nom_fonction']?></option>
+                        <?php endforeach;?>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" name="password" class="form-control" id="password" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
