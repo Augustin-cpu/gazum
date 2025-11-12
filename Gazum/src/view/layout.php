@@ -11,12 +11,17 @@
     
     <style>
         /* ========================================================== */
-        /* 1. STYLES GÉNÉRAUX et STICKY NAVBAR */
+        /* 1. STYLES GÉNÉRAUX et NAVBAR FIXE */
         /* ========================================================== */
+        :root {
+            --navbar-height: 56px;
+            --sidebar-width: 250px;
+        }
+
         body {
-            /* Pour prendre en compte la hauteur de la navbar dans le contenu */
-            padding-top: 56px; 
-            background-color: #f8f9fa; /* bg-light de Bootstrap */
+            /* Marge pour la navbar */
+            padding-top: var(--navbar-height); 
+            background-color: #f8f9fa; 
         }
         
         /* Rend la barre de navigation fixe en haut */
@@ -25,65 +30,72 @@
             top: 0;
             right: 0;
             left: 0;
-            z-index: 1030; /* Assure que la navbar est au-dessus du reste */
+            z-index: 1030; 
         }
 
-        /* Active Flexbox pour la mise en page (Sidebar à droite) */
+        /* Active Flexbox pour la mise en page (Sidebar à gauche) */
         #wrapper {
             display: flex; 
-            /* Inverse l'ordre : le contenu (page-content-wrapper) sera à gauche */
-            flex-direction: row-reverse; 
+            /* Rétablit l'ordre standard : Sidebar (Gauche) | Contenu (Droite) */
+            flex-direction: row; /* Changement ici : de row-reverse à row */
         }
 
         /* ========================================================== */
-        /* 2. SIDEBAR À DROITE */
+        /* 2. SIDEBAR FIXE À GAUCHE (MODIFICATIONS CLÉS) */
         /* ========================================================== */
         #sidebar-wrapper {
-            width: 250px; 
-            /* Utiliser min-height pour s'assurer que la sidebar descend au moins jusqu'au bas de l'écran */
-            min-height: calc(100vh - 56px); /* 100vh moins la hauteur de la navbar (env. 56px) */
+            width: var(--sidebar-width); 
+            
+            /* Rendre la sidebar FIXE pour qu'elle ne bouge pas au scroll */
+            position: fixed;
+            top: var(--navbar-height); /* Commence sous la navbar fixe */
+            left: 0; /* Changement ici : coller à GAUCHE */
+            
+            /* S'étend sur le reste de la hauteur de la fenêtre */
+            height: calc(100vh - var(--navbar-height)); 
             padding-top: 15px;
             color: white;
-            flex-shrink: 0; /* Empêche le shrinking */
-            border-left: 1px solid rgba(255, 255, 255, 0.2) !important; /* Bordure pour séparer du contenu */
+            z-index: 1020; /* Sous la navbar */
+            /* Bordure à droite pour séparer du contenu */
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important; 
+            border-left: none !important; /* Retirer la bordure gauche inutile */
         }
 
         /* ========================================================== */
-        /* 3. COULEURS ET HARMONIE (Thème Vert/Succès) */
+        /* 3. AJUSTEMENT DU CONTENU PRINCIPAL */
         /* ========================================================== */
+        #page-content-wrapper {
+            /* Le contenu doit laisser de la place à la sidebar fixe */
+            margin-left: var(--sidebar-width); /* Changement ici : de margin-right à margin-left */
+            width: 100%; /* Prend le reste de l'espace */
+            padding: 20px;
+        }
 
-        /* Titre de la Sidebar */
+        /* 4. COULEURS ET HARMONIE (Styles inchangés) */
         .sidebar-heading {
             padding: 0.875rem 1.25rem;
             font-size: 1.1rem;
             text-transform: uppercase;
             font-weight: bold;
-            color: #c3e6cb; /* Vert clair harmonisé */
+            color: #c3e6cb; 
             border-bottom-color: rgba(255, 255, 255, 0.2) !important;
         }
 
-        /* Liens de la Sidebar (Neutres par défaut) */
         .list-group-item-action {
-            color: #d4edda; /* Texte clair mais lisible */
+            color: #d4edda; 
             background-color: transparent;
             border: none;
-            padding: 12px 1.5rem; /* Augmente la hauteur des liens */
+            padding: 12px 1.5rem; 
             font-weight: 500;
         }
 
-        /* Survol et Actif */
         .list-group-item-action:hover, 
         .list-group-item-action.active {
             color: #fff;
-            background-color: #1e7e34; /* Vert plus foncé */
-            /* Pour rendre le lien actif plus visible */
-            border-right: 4px solid white; 
-        }
-
-        /* Contenu principal: prend tout l'espace restant */
-        #page-content-wrapper {
-            width: 100%;
-            padding: 20px;
+            background-color: #1e7e34; 
+            /* Bordure active à gauche */
+            border-left: 4px solid white; 
+            border-right: none; 
         }
     </style>
 </head>
@@ -116,14 +128,6 @@
     
     <div id="wrapper">
         
-        <div id="page-content-wrapper">
-            <main class="container-fluid">
-                <h1 class="mt-4 mb-4">Aperçu du Tableau de Bord</h1>
-                
-                <?= $contentpage ?> 
-            </main>
-        </div>
-
         <div id="sidebar-wrapper" class="bg-success shadow-lg">
             <div class="sidebar-heading border-bottom">MENU</div>
             <div class="list-group list-group-flush">
@@ -148,6 +152,14 @@
                 </a>
                 
             </div>
+        </div>
+        
+        <div id="page-content-wrapper">
+            <main class="container-fluid">
+                <h1 class="mt-4 mb-4">Aperçu du Tableau de Bord (Gazum)</h1>
+                
+                <?= $contentpage ?> 
+            </main>
         </div>
         
     </div>

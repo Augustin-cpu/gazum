@@ -299,7 +299,7 @@ $alertes_recentes = [
         </div>
     </div>
     
-    <div class="row mt-4">
+    <!-- <div class="row mt-4">
         <div class="col-12">
             <h5 class="text-muted mb-3"><i class="fas fa-bolt me-2"></i> Actions Rapides</h5>
         </div>
@@ -331,6 +331,185 @@ $alertes_recentes = [
                 Saisir les Présences
             </a>
         </div>
+    </div> -->
+<div class="row mt-4">
+        <div class="col-12">
+            <h5 class="text-muted mb-3"><i class="fas fa-bolt me-2"></i> Actions Rapides</h5>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <button type="button" class="btn btn-outline-success w-100 p-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-user-plus fa-2x d-block mb-1"></i>
+                Ajouter un Enseignant
+            </button>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <button type="button" class="btn btn-outline-primary w-100 p-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="fas fa-search fa-2x d-block mb-1"></i>
+                Rechercher un Profil
+            </button>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <button type="button" class="btn btn-outline-info w-100 p-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#reportModal">
+                <i class="fas fa-chart-line fa-2x d-block mb-1"></i>
+                Générer un Rapport
+            </button>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <button type="button" class="btn btn-outline-warning w-100 p-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#presenceModal">
+                <i class="fas fa-clipboard-check fa-2x d-block mb-1"></i>
+                Saisir les Présences
+            </button>
+        </div>
     </div>
 
+</div>
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addUserModalLabel"><i class="fas fa-user-plus me-2"></i> Ajouter un nouvel enseignant</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="?url=enseignants/add">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" name="nom" class="form-control" id="nom" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" name="prenom" class="form-control" id="prenom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Adresse Email</label>
+                        <input type="email" name="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Fonction</label>
+                        <select class="form-select" name="fonction_id" id="role" required>
+                            <option value="" selected disabled>Attribuez une fonction</option>
+                       <?php // Supposons que $fonction contient les données des fonctions ?>
+                       <?php /* foreach($fonction as $fonc):?>
+                            <option value="<?=$fonc['fonction_id']?>"><?= $fonc['nom_fonction']?></option>
+                        <?php endforeach; */?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirmer le Mot de passe</label>
+                        <input type="password" name="confirm_password" class="form-control" id="confirm_password" required>
+                    </div>
+                    
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success">Enregistrer l'enseignant</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="searchModalLabel"><i class="fas fa-search me-2"></i> Rechercher un Profil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="?url=enseignants/recherche" method="GET">
+                    <div class="mb-3">
+                        <label for="search_term" class="form-label">Nom, Prénom ou Matricule de l'enseignant</label>
+                        <input type="text" name="q" class="form-control form-control-lg" id="search_term" placeholder="Ex: Jean Dupont ou E-1234" required>
+                    </div>
+                    <p class="text-muted small">Vous serez redirigé vers la page des résultats de recherche.</p>
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="reportModalLabel"><i class="fas fa-chart-line me-2"></i> Options de Rapport</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="?url=rapports/generate" method="POST">
+                    <div class="mb-3">
+                        <label for="report_type" class="form-label">Type de Rapport</label>
+                        <select class="form-select" name="type" id="report_type" required>
+                            <option value="" selected disabled>Sélectionnez le type</option>
+                            <option value="presences">Rapport de Présences (Annuel)</option>
+                            <option value="salaires">Rapport des Salaires (Trimestriel)</option>
+                            <option value="evaluation">Rapport d'Évaluation (Par Matière)</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="start_date" class="form-label">Date de Début</label>
+                            <input type="date" name="start_date" class="form-control" id="start_date" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="end_date" class="form-label">Date de Fin</label>
+                            <input type="date" name="end_date" class="form-control" id="end_date" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-info text-white">Générer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="presenceModal" tabindex="-1" aria-labelledby="presenceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title" id="presenceModalLabel"><i class="fas fa-clipboard-check me-2"></i> Saisir les Présences</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="?url=presences/entry" method="POST">
+                    <div class="mb-3">
+                        <label for="session_date" class="form-label">Date de la Séance</label>
+                        <input type="date" name="session_date" class="form-control" id="session_date" value="<?= date('Y-m-d') ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="session_class" class="form-label">Classe/Groupe</label>
+                        <select class="form-select" name="class_id" id="session_class" required>
+                            <option value="" selected disabled>Sélectionnez la classe</option>
+                            <?php // Intégrer la boucle pour les classes ici ?>
+                        </select>
+                    </div>
+                    <p class="text-muted small">Cliquer sur "Continuer" vous mènera à la grille de saisie des présences pour cette classe.</p>
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-warning text-dark">Continuer la Saisie</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
