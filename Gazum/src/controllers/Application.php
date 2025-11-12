@@ -10,6 +10,11 @@ class Application{
     public function showHome($params){
         $bdd = new Database();
         $myView = new View('home');
+            // Redirection si l'utilisateur n'est pas connecté
+        if(!$bdd->toggle()){
+           $myView->redirect('?url=login');
+        }
+       
         // Ajout des donnes
         if(isset($_POST) && !empty($_POST)){
             extract($_POST);
@@ -34,7 +39,6 @@ class Application{
     }
     public function store($params){
         $bdd = new Database();
-
         
     }
 }

@@ -4,7 +4,10 @@ namespace Gazum\App\classes;
 class Routeur{
     private $request;
     private $routes = [
-        'home' => ['controller' => 'Application', 'method' => 'showHome']
+        'home' => ['controller' => 'Application', 'method' => 'showHome'],
+        'login' => ['controller' => 'Auth', 'method' => 'showLogin'],
+        'register' => ['controller' => 'Auth', 'method' => 'register'],
+        'disconnect' => ['controller' => 'Auth', 'method' => 'disconnect']
     ];
 
     public function __construct($request)
