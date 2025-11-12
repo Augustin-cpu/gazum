@@ -1,4 +1,4 @@
-<main class="container-lg my-5">
+<!-- <main class="container-lg my-5">
     <div class="row mb-4 align-items-center">
         
         <div class="col-md-6">
@@ -146,4 +146,191 @@
             </div>
         </div>
     </div>
+</div> -->
+<?php
+// --- DONNÉES SIMULÉES (À REMPLACER PAR VOTRE LOGIQUE PHP/BDD) ---
+// Ces variables doivent être chargées depuis votre base de données via votre contrôleur.
+$total_enseignants = 145;
+$enseignants_actifs = 138;
+$enseignants_nouvelles_recrues = 5;
+$fonctions_principales = [
+    ['nom' => 'Professeurs Titulaires', 'count' => 85, 'icon' => 'user-tie', 'color' => 'primary'],
+    ['nom' => 'Assistants', 'count' => 40, 'icon' => 'chalkboard-teacher', 'color' => 'info'],
+    ['nom' => 'Vacataires', 'count' => 20, 'icon' => 'user-clock', 'color' => 'warning'],
+];
+$alertes_recentes = [
+    ['type' => 'Avis', 'message' => 'Rapport annuel des présences dû le 30/11.', 'date' => 'Hier', 'class' => 'warning'],
+    ['type' => 'Nouveau', 'message' => 'Nouvelle recrue : Dr. M. Kamba ajouté.', 'date' => 'Aujourd\'hui', 'class' => 'success'],
+    ['type' => 'Urgent', 'message' => 'Mise à jour requise du profil pour 3 enseignants.', 'date' => '2 heures', 'class' => 'danger'],
+];
+// -----------------------------------------------------------------
+?>
+
+<div class="container-fluid py-4">
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-6 text-success fw-bold">
+                <i class="fas fa-home me-2"></i> Tableau de Bord Principal
+            </h1>
+            <p class="text-muted">Vue d'ensemble et accès rapide aux fonctionnalités de gestion des enseignants.</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-success text-white shadow-lg border-0">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <div class="h5 mb-0 fw-bold"><?= $total_enseignants ?></div>
+                            <div class="text-white-50 small">Total des Enseignants</div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <i class="fas fa-users fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-primary text-white shadow-lg border-0">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <div class="h5 mb-0 fw-bold"><?= $enseignants_actifs ?></div>
+                            <div class="text-white-50 small">Enseignants Actifs</div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <i class="fas fa-check-circle fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-warning text-dark shadow-lg border-0">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <div class="h5 mb-0 fw-bold">+<?= $enseignants_nouvelles_recrues ?></div>
+                            <div class="text-black-50 small">Nouvelles Recrues (30 jours)</div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <i class="fas fa-user-plus fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-info text-white shadow-lg border-0">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <div class="h5 mb-0 fw-bold">12</div>
+                            <div class="text-white-50 small">Évaluations à Venir</div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <i class="fas fa-calendar-alt fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow border-0">
+                <div class="card-header bg-light fw-bold text-primary">
+                    <i class="fas fa-sitemap me-2"></i> Répartition par Fonction
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($fonctions_principales as $fonction): ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-<?= $fonction['icon'] ?> text-<?= $fonction['color'] ?> me-2"></i> 
+                                <?= $fonction['nom'] ?>
+                            </div>
+                            <span class="badge bg-<?= $fonction['color'] ?> rounded-pill fs-6"><?= $fonction['count'] ?></span>
+                        </li>
+                        <?php endforeach; ?>
+                        <li class="list-group-item text-center">
+                            <a href="?url=enseignants/liste" class="text-success text-decoration-none fw-bold">
+                                Voir la liste complète <i class="fas fa-arrow-circle-right ms-1"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow border-0">
+                <div class="card-header bg-light fw-bold text-danger">
+                    <i class="fas fa-bell me-2"></i> Notifications & Alertes
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($alertes_recentes as $alerte): ?>
+                        <li class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <span class="badge bg-<?= $alerte['class'] ?>"><?= $alerte['type'] ?></span>
+                                <small class="text-muted"><?= $alerte['date'] ?></small>
+                            </div>
+                            <p class="mb-1 mt-1 small"><?= $alerte['message'] ?></p>
+                        </li>
+                        <?php endforeach; ?>
+                        <li class="list-group-item text-center">
+                            <a href="?url=notifications" class="text-muted small">
+                                Toutes les notifications
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5 class="text-muted mb-3"><i class="fas fa-bolt me-2"></i> Actions Rapides</h5>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <a href="#" class="btn btn-outline-success w-100 p-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-user-plus fa-2x d-block mb-1"></i>
+                Ajouter un Enseignant
+            </a>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <a href="?url=enseignants/recherche" class="btn btn-outline-primary w-100 p-3 shadow-sm">
+                <i class="fas fa-search fa-2x d-block mb-1"></i>
+                Rechercher un Profil
+            </a>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <a href="?url=rapports" class="btn btn-outline-info w-100 p-3 shadow-sm">
+                <i class="fas fa-chart-line fa-2x d-block mb-1"></i>
+                Générer un Rapport
+            </a>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <a href="?url=presences" class="btn btn-outline-warning w-100 p-3 shadow-sm">
+                <i class="fas fa-clipboard-check fa-2x d-block mb-1"></i>
+                Saisir les Présences
+            </a>
+        </div>
+    </div>
+
 </div>
